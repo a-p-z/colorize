@@ -42,9 +42,11 @@ BOLD_HIGH_INTENSITY_CYAN_ON='\x1b[1;96m'
 BOLD_HIGH_INTENSITY_WHITE_ON='\x1b[1;97m'
 
 function colorize() {
-  sed "s#ERROR#$RED_ON&$COLOR_OFF#;
-     s#INFO#$HIGH_INTENSITY_BLUE_ON&$COLOR_OFF#;
-     s#WARN\(ING\)\?#$YELLOW_ON&$COLOR_OFF#;" $1
+  COLORIZE_EXPRESSION=${COLORIZE_EXPRESSION:-"s#ERROR#$RED_ON&$COLOR_OFF#I;
+                                              s#WARN\(ING\)\?#$YELLOW_ON&$COLOR_OFF#I;
+                                              s#DEBUG#$PURPLE_ON&$COLOR_OFF#I;
+                                              s#INFO#$HIGH_INTENSITY_BLUE_ON&$COLOR_OFF#I;"}
+  sed -u "$COLORIZE_EXPRESSION" $1
 }
 
 #
